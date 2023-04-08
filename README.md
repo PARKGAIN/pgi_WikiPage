@@ -14,4 +14,4 @@
 - return : PostsTitle[]
 ### GET /posts/:id
 - 글의 제목과 본문을 가져옴
--return : Post
+- return : Post

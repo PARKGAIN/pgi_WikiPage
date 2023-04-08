@@ -1,5 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const postController = require("../controllers/postController");
+
+router.get('/posts',postController.loadPostList);
+router.post('/posts/write',postController.savePost);
+router.patch('/posts/:id',postController.updatePost);
 
 // GET API to fetch the titles and IDs of other posts mentioned in the current post
 router.get('/posts/:id/mentioned-posts', async (req, res) => {
@@ -27,5 +31,7 @@ function extractMentionedPostTitles(body) {
   }
   return matches;
 }
+
+router.get('/posts/:id',postController.loadPost);
 
 module.exports = router;
