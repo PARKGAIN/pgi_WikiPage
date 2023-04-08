@@ -1,11 +1,11 @@
-const Post = require('../models/postModel');
+const Posts = require('../models/postModel');
 
 module.exports.loadPostList = async (req, res) => {
     try{
         const pageNumber = req.query.pageNumber || 1; 
         const pageSize = req.query.pageSize || 5; 
-        const totalCount = await Post.countDocuments(); 
-        const posts= await Post.find()
+        const totalCount = await Posts.countDocuments(); 
+        const posts= await Posts.find()
         .select('title')
         .skip((pageNumber - 1) * pageSize) 
         .limit(pageSize); 
@@ -17,7 +17,7 @@ module.exports.loadPostList = async (req, res) => {
             pageNumber
           };
 
-        res.send(result);
+        res.send(result.posts);
     } catch(err) {
         console.log(err);
         res.status(500).send('서버 에러 발생');
@@ -26,6 +26,10 @@ module.exports.loadPostList = async (req, res) => {
 
 module.exports.savePost = async (req,res) => {
     try {
+        const post = await Posts.create({
+            title: req.body.title,
+            content: req.body.content,
+        });
         const regex = /(\[\[([^\]]+)\]\])/g;
         const matches = post.content.match(regex);
         if (matches) {
@@ -36,11 +40,7 @@ module.exports.savePost = async (req,res) => {
               post.content = post.content.replace(matches[i], `[[${linkedPost._id}]]`);
             }
           }
-        }
-        const post = await Post.create({
-            title: req.body.title,
-            content: req.body.content,
-        });
+        }   
         console.log(post);
         res.status(200).send('ok');
     } catch(err) {
@@ -56,7 +56,7 @@ module.exports.updatePost = async (req,res) => {
             title: req.body.title,
             content: req.body.content,
         };
-        await Post.findByIdAndUpdate(postId, updatedPost,{new: true});
+        await Posts.findByIdAndUpdate(postId, updatedPost,{new: true});
         res.status(200).send('ok');
     } catch(err) {
         console.log(err)
@@ -66,8 +66,9 @@ module.exports.updatePost = async (req,res) => {
 
 module.exports.loadPost = async (req,res) => {
     try {
-        const post=  await Post.findById(req.params.id).select('title content');
-        res.send(post)
+        const postId = parseInt(req.params.id);
+        const post=  await Posts.find({postId:postId}).select('title content');
+        res.send(post);
     }catch(err){
         console.log(err)
         res.status(500).send('서버 에러 발생');

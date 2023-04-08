@@ -2,9 +2,15 @@ import Header from "@src/components/Header/Header";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAsync from "@src/hooks/useAsync";
+import { useCallback, useState } from "react";
+import UpdateModal from "@src/components/UpdateModal/UpdateModal";
 
 const WikiPage = () => {
   const { id } = useParams();
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const onClickUpdatePost = useCallback(() => {
+    setShowUpdateModal(true);
+  }, []);
 
   const loadPost = async () => {
     const res = await axios.get(`http://localhost:8000/posts/${id}`);
@@ -16,10 +22,10 @@ const WikiPage = () => {
   if (error) return <p>Error</p>;
 
   return (
-    <div>
+    <div className="page_container">
       <Header />
       <div style={{ width: "760px", margin: "0px auto" }}>
-        {post.map((e: any, i: number) => {
+        {post?.map((e: any, i: number) => {
           return (
             <div key={e}>
               <h1>{post[i].title}</h1>
@@ -29,6 +35,8 @@ const WikiPage = () => {
           );
         })}
       </div>
+      <button onClick={onClickUpdatePost}>수정</button>
+      <UpdateModal />
     </div>
   );
 };

@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const postSchema = new Schema({
+const counterSchema = new Schema({
+  _id: { type: String, required: true },
+  seq: { type: Number, default: 0 },
+});
+
+const Counter = mongoose.model('Counter', counterSchema);
+
+const postsSchema = new Schema({
+    postId: Number,
     title: {
       type: String,
       required: true
@@ -14,7 +22,18 @@ const postSchema = new Schema({
       title: String,
       link: String
     },
-    id: mongoose.Schema.Types.ObjectId,
-  }, { timestamps: true });
+  },{ timestamps: true ,versionKey: false});
+
+
+postsSchema.pre('save', async function(next) {
+  const doc = this;
+  if (doc.isNew) {
+    const counter = await Counter.findByIdAndUpdate('post_id', { $inc: { seq: 1 } }, { new: true, upsert: true });
+    doc.postId = counter.seq;
+    doc._id = new mongoose.Types.ObjectId(); 
+  }
+  next();
+});
+
   
-  module.exports = mongoose.model('Post', postSchema);
+  module.exports = mongoose.model('Posts', postsSchema);

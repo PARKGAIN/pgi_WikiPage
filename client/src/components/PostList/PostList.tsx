@@ -1,47 +1,24 @@
-export {};
+import axios from "axios";
+import useAsync from "@src/hooks/useAsync";
 
-// interface MentionedPost {
-//   _id: string;
-//   title: string;
-// }
+const PostList = ({ pageNumber }: any) => {
+  const loadPost = async () => {
+    const res = await axios.get(
+      `http://localhost:8000/posts?page=${pageNumber}&size=${5}`
+    );
+    return res.data;
+  };
+  const [state] = useAsync(loadPost, []);
+  const { loading, data: postlist, error }: any = state;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+  return (
+    <div>
+      {postlist?.map((e: any, i: number) => {
+        return <div key={e}>{postlist[i].title}</div>;
+      })}
+    </div>
+  );
+};
 
-// interface Post {
-//   _id: string;
-//   title: string;
-//   body: string;
-// }
-
-// const Post: React.FC<{ postId: string }> = ({ postId }) => {
-//   const [post, setPost] = useState<Post>();
-//   const [mentionedPosts, setMentionedPosts] = useState<MentionedPost[]>([]);
-
-//   useEffect(() => {
-//     // Fetch the current post
-//     axios.get(`/api/posts/${postId}`).then((response) => {
-//       setPost(response.data);
-//     });
-
-//     // Fetch the mentioned posts
-//     axios.get(`/api/posts/${postId}/mentioned-posts`).then((response) => {
-//       setMentionedPosts(response.data);
-//     });
-//   }, [postId]);
-
-//   // Loop through each mentioned post and replace the title in the body with a link
-//   //mentionedPosts.forEach((mentionedPost) => {
-//   // body = body.replace(
-//   //  `[[${mentionedPost.title}]]`,
-//   //  `<a href="/posts/${mentionedPost._id}">${mentionedPost.title}</a>`
-//   //    );
-//   //  });
-
-//   return (
-//     // <div>
-//     {
-//       /* <h1>{post?.title}</h1> */
-//     }
-//     //  </div>
-//   );
-// };
-
-// export default Post;
+export default PostList;
