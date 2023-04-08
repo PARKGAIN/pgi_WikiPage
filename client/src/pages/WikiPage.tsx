@@ -11,7 +11,9 @@ const WikiPage = () => {
   const onClickUpdatePost = useCallback(() => {
     setShowUpdateModal(true);
   }, []);
-
+  const onCloseModal = useCallback(() => {
+    setShowUpdateModal(false);
+  }, []);
   const loadPost = async () => {
     const res = await axios.get(`http://localhost:8000/posts/${id}`);
     return res.data;
@@ -36,7 +38,12 @@ const WikiPage = () => {
         })}
       </div>
       <button onClick={onClickUpdatePost}>수정</button>
-      <UpdateModal />
+      <UpdateModal
+        show={showUpdateModal}
+        onCloseModal={onCloseModal}
+        setShowPostWriteModal={setShowUpdateModal}
+        postId={id}
+      />
     </div>
   );
 };

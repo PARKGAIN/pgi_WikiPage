@@ -1,5 +1,4 @@
 import Header from "@src/components/Header/Header";
-
 import PostList from "@src/components/PostList/PostList";
 import PostWriteModal from "@src/components/PostWriteModal/PostWriteModal";
 import { useState, useCallback } from "react";
@@ -24,7 +23,7 @@ const MainPage = () => {
       <Header />
       <button onClick={onClickWritePost}>추가</button>
       <PostList pageNumber={pageNumber} />
-      <div>
+      <div className="pagination_center">
         <button onClick={goPrevPage}>이전</button>
         <span>{pageNumber}</span>
         <button onClick={goNextPage}>다음</button>
