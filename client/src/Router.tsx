@@ -8,7 +8,7 @@ const Router = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/1" element={<Wiki />} />
+        <Route path="/:id" element={<Wiki />} />
       </Routes>
     </Suspense>
   );

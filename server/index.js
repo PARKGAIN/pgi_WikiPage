@@ -8,8 +8,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.get("/", (req, res) => {
-    res.send("Hello World");
-  });
 connect();
+app.use("/",require("./routes/postRouter"));
 app.listen(8000);
