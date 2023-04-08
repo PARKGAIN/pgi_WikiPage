@@ -10,6 +10,10 @@ const postSchema = new Schema({
     content: {
       type: String,
       required: true
+    },
+    links: {
+      title: String,
+      link: String
     }
   }, { timestamps: true });
   
