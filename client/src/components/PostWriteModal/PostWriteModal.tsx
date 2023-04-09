@@ -31,6 +31,7 @@ const PostWriteModal = ({
         <Label>
           <span>제목</span>
           <input
+            className="width_699"
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
@@ -40,6 +41,8 @@ const PostWriteModal = ({
         <Label>
           <span>내용</span>
           <textarea
+            rows={20}
+            cols={95}
             value={content}
             onChange={(e) => {
               setContent(e.target.value);

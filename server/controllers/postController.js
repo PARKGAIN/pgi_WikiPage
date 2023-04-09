@@ -6,7 +6,8 @@ module.exports.loadPostList = async (req, res) => {
         const pageSize = req.query.pageSize || 5; 
         const totalCount = await Posts.countDocuments(); 
         const posts= await Posts.find()
-        .select('title postId')
+        .select('title postId content')
+        .sort({createdAt:-1})
         .skip((pageNumber - 1) * pageSize) 
         .limit(pageSize); 
 
@@ -56,7 +57,7 @@ module.exports.updatePost = async (req,res) => {
             title: req.body.title,
             content: req.body.content,
         };
-        await Posts.findByIdAndUpdate(postId, updatedPost,{new: true});
+        await Posts.findOneAndUpdate({postId: postId}, updatedPost,{new: true});
         res.status(200).send('ok');
     } catch(err) {
         console.log(err)
@@ -71,6 +72,17 @@ module.exports.loadPost = async (req,res) => {
         res.send(post);
     }catch(err){
         console.log(err)
+        res.status(500).send('서버 에러 발생');
+    }
+}
+
+module.exports.loadOtherPost = async (req,res) => {
+    try {
+        const postId = parseInt(req.params.id);
+        const otherPosts = await Posts.find({ postId: { $nin: [postId] } });
+        res.status(200).json(otherPosts);
+    }catch(err){
+        console.log(err);
         res.status(500).send('서버 에러 발생');
     }
 }

@@ -1,10 +1,31 @@
+import useAsync from "@src/hooks/useAsync";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+
 const WikiPagePostList = () => {
+  const { id } = useParams();
+  const loadOtherPost = async () => {
+    const res = await axios.get(`http://localhost:8000/postlists/${id}`);
+    return res.data;
+  };
+  const [state] = useAsync(loadOtherPost, []);
+  const { loading, data: otherPost, error }: any = state;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+  console.dir(otherPost);
   return (
-    <div>
+    <div className="postlist_container">
       <h4>다른 글</h4>
       <table>
         <tbody>
-          <tr></tr>
+          {otherPost?.map((e: any, i: number) => {
+            return (
+              <tr key={e}>
+                <td>{otherPost[i].title}</td>
+                <td>{otherPost[i].content}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -12,14 +33,3 @@ const WikiPagePostList = () => {
 };
 
 export default WikiPagePostList;
-/*
-#content .another_category {
-    padding: 16px 20px 14px;
-    margin: 60px 0 57px!important;
-}
-
-@media screen and (max-width: 767px)
-#content .another_category {
-    margin: 40px 0 37px!important;
-}
-*/

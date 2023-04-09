@@ -23,3 +23,6 @@
 ### GET /posts/:id
 - 글의 제목과 본문을 가져옴
 - return : Post
+### GET /postlist/:id
+- 해당 id 값을 가진 글을 제외한 나머지 글들을 가져옴
+- return : PostList

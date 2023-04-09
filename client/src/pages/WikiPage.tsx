@@ -1,9 +1,10 @@
 import Header from "@src/components/Header/Header";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import useAsync from "@src/hooks/useAsync";
 import { useCallback, useState } from "react";
 import UpdateModal from "@src/components/UpdateModal/UpdateModal";
+import WikiPagePostList from "@src/components/WikiPagePostList/WikiPagePostList";
+import axios from "axios";
 
 const WikiPage = () => {
   const { id } = useParams();
@@ -22,24 +23,28 @@ const WikiPage = () => {
   const { loading, data: post, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-
+  if (!post) return <p>Loading...</p>;
   return (
     <div className="page_container">
       <Header />
+      <button className="float_right" onClick={onClickUpdatePost}>
+        수정
+      </button>
       <div style={{ width: "760px", margin: "0px auto" }}>
         {post?.map((e: any, i: number) => {
           return (
             <div key={e}>
-              <h1>{post[i].title}</h1>
+              <h2>{post[i].title}</h2>
               <hr />
-              <div>{post[i].content}</div>
+              <div style={{ minHeight: "300px" }}>{post[i].content}</div>
             </div>
           );
         })}
       </div>
-      <button onClick={onClickUpdatePost}>수정</button>
+      <WikiPagePostList />
       <UpdateModal
         show={showUpdateModal}
+        post={post}
         onCloseModal={onCloseModal}
         setShowPostWriteModal={setShowUpdateModal}
         postId={id}

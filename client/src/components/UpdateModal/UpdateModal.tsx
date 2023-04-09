@@ -3,10 +3,9 @@ import axios from "axios";
 import { Label } from "../PostWriteModal/styles";
 import { useState } from "react";
 
-const UpdateModal = ({ show, onCloseModal, postId }: any) => {
-  // props로 원래 title하고 content 받아오자
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const UpdateModal = ({ show, onCloseModal, postId, post }: any) => {
+  const [title, setTitle] = useState(post[0].title);
+  const [content, setContent] = useState(post[0].content);
   const updatePost = async () => {
     try {
       await axios.patch(`http://localhost:8000/posts/${postId}`, {
@@ -23,6 +22,7 @@ const UpdateModal = ({ show, onCloseModal, postId }: any) => {
         <Label>
           <span>제목</span>
           <input
+            className="width_699"
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
@@ -32,6 +32,8 @@ const UpdateModal = ({ show, onCloseModal, postId }: any) => {
         <Label>
           <span>내용</span>
           <textarea
+            rows={20}
+            cols={95}
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
