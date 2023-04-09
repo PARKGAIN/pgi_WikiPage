@@ -12,7 +12,7 @@ const WikiPagePostList = () => {
   const { loading, data: otherPost, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-  console.dir(otherPost);
+
   return (
     <div className="postlist_container">
       <h4>다른 글</h4>
@@ -20,7 +20,7 @@ const WikiPagePostList = () => {
         <tbody>
           {otherPost?.map((e: any, i: number) => {
             return (
-              <tr key={e}>
+              <tr key={otherPost[i]._id}>
                 <td>{otherPost[i].title}</td>
                 <td>{otherPost[i].content}</td>
               </tr>

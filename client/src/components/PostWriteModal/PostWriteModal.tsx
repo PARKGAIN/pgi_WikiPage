@@ -1,30 +1,18 @@
-import axios from "axios";
 import Modal from "../Modal/Modal";
 import { Label } from "./styles";
 import { useState } from "react";
 import useAsync from "@src/hooks/useAsync";
+import { loadTitles } from "@src/apis/apis";
+import axios from "axios";
 interface Props {
   show: boolean;
   onCloseModal: any;
   setShowPostWriteModal: any;
 }
 
-const PostWriteModal = ({
-  show,
-  setShowPostWriteModal,
-  onCloseModal,
-}: Props) => {
+const PostWriteModal = ({ show, onCloseModal }: Props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const loadTitles = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/posts/title");
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const [state] = useAsync(loadTitles, []);
   const { loading, data: fetchedTitles, error }: any = state;
   if (loading) return <p>Loading...</p>;
@@ -41,16 +29,24 @@ const PostWriteModal = ({
     }
   };
 
-  function wrapWithATag(content: any, fetchedTitles: string[]) {
+  function wrapWithATag(content: any, fetchedTitles: string[] | undefined) {
+    if (!fetchedTitles) return content;
     let wrappedContent = content;
-    fetchedTitles &&
-      fetchedTitles.forEach((target) => {
-        const pattern = new RegExp(target.replace(/\?/g, "\\?"), "g");
-        wrappedContent = wrappedContent.replace(pattern, `<a>${target}</a>`);
-      });
+    fetchedTitles.forEach((target) => {
+      const pattern = new RegExp(
+        `(?<!href=")${target.replace(/\?/g, "\\?")}(?!")`,
+        "g"
+      );
+      wrappedContent = wrappedContent.replace(
+        pattern,
+        `<a href="/posts/${target}">${target}</a>`
+      );
+    });
     return wrappedContent;
   }
+
   const wrappedContent = wrapWithATag(content, fetchedTitles);
+
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
       <form onSubmit={savePost}>

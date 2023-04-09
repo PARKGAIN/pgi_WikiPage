@@ -18,6 +18,7 @@ const MainPage = () => {
   const goNextPage = () => {
     setPageNumber(pageNumber + 1);
   };
+
   return (
     <div className="page_container">
       <Header />
