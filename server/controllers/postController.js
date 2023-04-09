@@ -31,18 +31,6 @@ module.exports.savePost = async (req,res) => {
             title: req.body.title,
             content: req.body.content,
         });
-        const regex = /(\[\[([^\]]+)\]\])/g;
-        const matches = post.content.match(regex);
-        if (matches) {
-          for (let i = 0; i < matches.length; i++) {
-            const title = matches[i].replace(/[\[\]]/g, '');
-            const linkedPost = await Post.findOne({ title });
-            if (linkedPost) {
-              post.content = post.content.replace(matches[i], `[[${linkedPost._id}]]`);
-            }
-          }
-        }   
-        console.log(post);
         res.status(200).send('ok');
     } catch(err) {
         console.log(err)
@@ -81,6 +69,17 @@ module.exports.loadOtherPost = async (req,res) => {
         const postId = parseInt(req.params.id);
         const otherPosts = await Posts.find({ postId: { $nin: [postId] } });
         res.status(200).json(otherPosts);
+    }catch(err){
+        console.log(err);
+        res.status(500).send('서버 에러 발생');
+    }
+}
+
+module.exports.loadTitles = async (req, res) => {
+    try {
+        const titles =await Posts.find({},{title: 1,_id:0});
+        const titleArr= titles.map((i)=>(i.title))
+        res.send(titleArr);
     }catch(err){
         console.log(err);
         res.status(500).send('서버 에러 발생');
