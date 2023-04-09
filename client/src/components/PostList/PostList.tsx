@@ -1,6 +1,7 @@
 import axios from "axios";
 import useAsync from "@src/hooks/useAsync";
 import { PostContainer, PostListItem } from "./styles";
+import { Link } from "react-router-dom";
 
 const PostList = ({ pageNumber }: any) => {
   const loadPost = async () => {
@@ -17,7 +18,9 @@ const PostList = ({ pageNumber }: any) => {
     <PostContainer>
       {postlist?.map((e: any, i: number) => {
         return (
-          <PostListItem key={postlist[i]._id}>{postlist[i].title}</PostListItem>
+          <Link key={postlist[i]._id} to={`/${postlist[i].postId}`}>
+            <PostListItem>{postlist[i].title}</PostListItem>
+          </Link>
         );
       })}
     </PostContainer>

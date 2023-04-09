@@ -4,6 +4,7 @@ import { Label } from "../PostWriteModal/styles";
 import { useState } from "react";
 
 const UpdateModal = ({ show, onCloseModal, postId }: any) => {
+  // props로 원래 title하고 content 받아오자
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const updatePost = async () => {

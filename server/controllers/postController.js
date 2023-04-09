@@ -6,7 +6,7 @@ module.exports.loadPostList = async (req, res) => {
         const pageSize = req.query.pageSize || 5; 
         const totalCount = await Posts.countDocuments(); 
         const posts= await Posts.find()
-        .select('title')
+        .select('title postId')
         .skip((pageNumber - 1) * pageSize) 
         .limit(pageSize); 
 

@@ -1,3 +1,11 @@
+## 기술스택
+#### Client
+- React
+- TypeScript
+#### Server
+- Node.js
+- Express
+- MongoDB
 ## API 명세
 ### GET /posts?page={page_number}&size={page_size}
 - 페이징처리된 글 목록을 가져옴
