@@ -1,3 +1,10 @@
+# 위키 페이지
+
+## 기능
+
+## 실행방법
+```
+```
 ## 기술스택
 #### Client
 - React
@@ -17,12 +24,12 @@
 ### PATCH /posts/:id
 - 글을 수정함
 - return : 'ok'
-### GET /posts/:id/mentioned-posts
-- 글의 본문에 포함된 다른 글의 제목을 가져옴
+### GET /posts/title
+- 전체 글의 제목을 가져옴 
 - return : PostsTitle[]
 ### GET /posts/:id
 - 글의 제목과 본문을 가져옴
 - return : Post
 ### GET /postlist/:id
 - 해당 id 값을 가진 글을 제외한 나머지 글들을 가져옴
-- return : PostList
+- return : PostList[]
