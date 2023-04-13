@@ -22,7 +22,11 @@ const WikiPagePostList = () => {
             return (
               <tr key={otherPost[i]._id}>
                 <td>{otherPost[i].title}</td>
-                <td>{otherPost[i].content}</td>
+                <td
+                  dangerouslySetInnerHTML={{
+                    __html: `${otherPost[i].content}`,
+                  }}
+                />
               </tr>
             );
           })}
