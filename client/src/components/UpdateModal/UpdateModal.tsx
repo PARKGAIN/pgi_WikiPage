@@ -1,24 +1,15 @@
 import Modal from "../Modal/Modal";
-import axios from "axios";
+import { updatePost } from "@src/apis/apis";
 import { Label } from "../PostWriteModal/styles";
 import { useState } from "react";
 
 const UpdateModal = ({ show, onCloseModal, postId, post }: any) => {
   const [title, setTitle] = useState(post[0].title);
   const [content, setContent] = useState(post[0].content);
-  const updatePost = async () => {
-    try {
-      await axios.patch(`http://localhost:8000/posts/${postId}`, {
-        title: title,
-        content: content,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
-      <form onSubmit={updatePost}>
+      <form onSubmit={() => updatePost(postId, title, content)}>
         <Label>
           <span>제목</span>
           <input
