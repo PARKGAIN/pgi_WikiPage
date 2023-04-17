@@ -36,7 +36,12 @@ const WikiPage = () => {
             <div key={e}>
               <h2>{post[i].title}</h2>
               <hr />
-              <div style={{ minHeight: "300px" }}>{post[i].content}</div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `${post[i].content}`,
+                }}
+                style={{ minHeight: "300px" }}
+              />
             </div>
           );
         })}

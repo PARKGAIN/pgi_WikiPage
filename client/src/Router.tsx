@@ -9,7 +9,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/:id" element={<Wiki />} />
-        <Route path="/posts/:title" element={<Wiki />} />
+        <Route path="/:title" element={<Wiki />} />
       </Routes>
     </Suspense>
   );
