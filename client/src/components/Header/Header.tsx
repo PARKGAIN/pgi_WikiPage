@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
 import { Container, Logo } from "./styles";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <Container>
-      <Link to={"/"}>
-        <Logo>코딩허브</Logo>
-      </Link>
-    </Container>
+    <Link to="/">
+      <Container>
+        <Logo>Coding Hub</Logo>
+      </Container>
+    </Link>
   );
 };
 

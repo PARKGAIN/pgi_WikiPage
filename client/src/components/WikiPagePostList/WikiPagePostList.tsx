@@ -1,14 +1,10 @@
 import useAsync from "@src/hooks/useAsync";
-import axios from "axios";
+import { loadOtherPost } from "@src/apis/apis";
 import { useParams } from "react-router-dom";
 
 const WikiPagePostList = () => {
   const { id } = useParams();
-  const loadOtherPost = async () => {
-    const res = await axios.get(`http://localhost:8000/postlists/${id}`);
-    return res.data;
-  };
-  const [state] = useAsync(loadOtherPost, []);
+  const [state] = useAsync(() => loadOtherPost(id), []);
   const { loading, data: otherPost, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;

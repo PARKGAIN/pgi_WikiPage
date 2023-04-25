@@ -3,7 +3,7 @@ import { Label } from "./styles";
 import { useState } from "react";
 import useAsync from "@src/hooks/useAsync";
 import { loadTitles } from "@src/apis/apis";
-import axios from "axios";
+import { savePost } from "@src/apis/apis";
 interface Props {
   show: boolean;
   onCloseModal: any;
@@ -17,17 +17,6 @@ const PostWriteModal = ({ show, onCloseModal }: Props) => {
   const { loading, data: fetchedTitles, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-
-  const savePost = async () => {
-    try {
-      await axios.post("http://localhost:8000/posts/write", {
-        title: title,
-        content: content,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   function wrapWithATag(content: any, fetchedTitles: string[] | undefined) {
     if (!fetchedTitles) return content;
@@ -49,7 +38,7 @@ const PostWriteModal = ({ show, onCloseModal }: Props) => {
 
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
-      <form onSubmit={savePost}>
+      <form onSubmit={() => savePost(title, content)}>
         <Label>
           <span>제목</span>
           <input

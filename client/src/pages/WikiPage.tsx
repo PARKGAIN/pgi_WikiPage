@@ -4,7 +4,7 @@ import useAsync from "@src/hooks/useAsync";
 import { useCallback, useState } from "react";
 import UpdateModal from "@src/components/UpdateModal/UpdateModal";
 import WikiPagePostList from "@src/components/WikiPagePostList/WikiPagePostList";
-import axios from "axios";
+import { loadPost } from "@src/apis/apis";
 
 const WikiPage = () => {
   const { id } = useParams();
@@ -15,11 +15,8 @@ const WikiPage = () => {
   const onCloseModal = useCallback(() => {
     setShowUpdateModal(false);
   }, []);
-  const loadPost = async () => {
-    const res = await axios.get(`http://localhost:8000/posts/${id}`);
-    return res.data;
-  };
-  const [state] = useAsync(loadPost, []);
+
+  const [state] = useAsync(() => loadPost(id), []);
   const { loading, data: post, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
