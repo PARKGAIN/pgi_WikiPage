@@ -41,6 +41,7 @@ server : server폴더에서 npm install 후 .env 파일 생성하고 mongodb 패
 
 <br/>
 ## API 명세
+
 ### GET /posts?page={page_number}&size={page_size}
 - 페이징처리된 글 목록을 가져옴
 - return : Posts[]
