@@ -1,5 +1,6 @@
-import { Container, Logo } from "./styles";
 import { Link } from "react-router-dom";
+import { Container, Logo } from "./styles";
+
 const Header = () => {
   return (
     <Link to="/">

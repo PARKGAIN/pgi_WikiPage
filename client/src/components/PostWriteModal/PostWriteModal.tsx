@@ -28,7 +28,7 @@ const PostWriteModal = ({ show, onCloseModal }: Props) => {
       );
       wrappedContent = wrappedContent.replace(
         pattern,
-        `<a href="/posts/${target}">${target}</a>`
+        `<a href="/${target}">${target}</a>`
       );
     });
     return wrappedContent;

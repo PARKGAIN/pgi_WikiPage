@@ -9,7 +9,7 @@ const UpdateModal = ({ show, onCloseModal, postId, post }: any) => {
 
   return (
     <Modal show={show} onCloseModal={onCloseModal}>
-      <form onSubmit={() => updatePost(title, content, postId)}>
+      <form onSubmit={() => updatePost(postId, title, content)}>
         <Label>
           <span>제목</span>
           <input
