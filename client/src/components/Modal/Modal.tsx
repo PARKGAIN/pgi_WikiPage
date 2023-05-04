@@ -1,13 +1,13 @@
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { CreateModal, CloseModalButton } from "./styles";
 
 interface Props {
   show: boolean;
   onCloseModal: () => void;
-  children: any;
+  children: ReactNode;
 }
 const Modal = ({ show, children, onCloseModal }: Props) => {
-  const stopPropagation = useCallback((e: any) => {
+  const stopPropagation = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
   }, []);
 
@@ -17,7 +17,7 @@ const Modal = ({ show, children, onCloseModal }: Props) => {
   return (
     <CreateModal onClick={onCloseModal}>
       <div onClick={stopPropagation}>
-        <CloseModalButton onClick={onCloseModal}>&times;</CloseModalButton>
+        <CloseModalButton onClick={onCloseModal} />
         {children}
       </div>
     </CreateModal>
