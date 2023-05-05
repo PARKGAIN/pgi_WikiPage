@@ -36,7 +36,7 @@ export const loadPost = async (id:string|undefined) => {
     }
   };
 
-export const updatePost = async (postId:number,title:string,content:string) => {
+export const updatePost = async (postId:string|undefined,title:string,content:string) => {
     try {
       await axios.patch(`http://localhost:8000/posts/${postId}`, {
         title: title,

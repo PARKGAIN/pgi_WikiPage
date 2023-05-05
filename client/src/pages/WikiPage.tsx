@@ -17,7 +17,7 @@ const WikiPage = () => {
   }, []);
 
   const [state] = useAsync(() => loadPost(id), []);
-  const { loading, data: post, error } = state;
+  const { loading, data: post, error }: any = state;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
   if (!post) return <p>Loading...</p>;

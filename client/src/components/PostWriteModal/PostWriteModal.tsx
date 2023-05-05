@@ -7,7 +7,7 @@ import { savePost } from "@src/apis/apis";
 interface Props {
   show: boolean;
   onCloseModal: any;
-  setShowPostWriteModal: any;
+  setShowPostWriteModal: unknown;
 }
 
 const PostWriteModal = ({ show, onCloseModal }: Props) => {

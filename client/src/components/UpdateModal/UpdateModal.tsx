@@ -3,7 +3,14 @@ import { updatePost } from "@src/apis/apis";
 import { Label } from "../PostWriteModal/styles";
 import { useState } from "react";
 
-const UpdateModal = ({ show, onCloseModal, postId, post }: any) => {
+interface Props {
+  show: boolean;
+  onCloseModal: any;
+  postId: string | undefined;
+  post: any[];
+}
+
+const UpdateModal = ({ show, onCloseModal, postId, post }: Props) => {
   const [title, setTitle] = useState(post[0].title);
   const [content, setContent] = useState(post[0].content);
 
