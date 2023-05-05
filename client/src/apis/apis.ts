@@ -8,7 +8,7 @@ export const loadTitles = async () => {
       console.log(error);
     }
   };
-export const loadPostList = async (pageNumber:string) => {
+export const loadPostList = async (pageNumber:number) => {
     const res = await axios.get(
       `http://localhost:8000/posts?pageNumber=${pageNumber}&pageSize=${5}`
     );

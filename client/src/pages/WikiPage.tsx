@@ -48,7 +48,6 @@ const WikiPage = () => {
         show={showUpdateModal}
         post={post}
         onCloseModal={onCloseModal}
-        setShowPostWriteModal={setShowUpdateModal}
         postId={id}
       />
     </div>

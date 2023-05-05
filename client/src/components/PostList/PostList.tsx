@@ -3,7 +3,7 @@ import { PostContainer, PostListItem } from "./styles";
 import { Link } from "react-router-dom";
 import { loadPostList } from "@src/apis/apis";
 
-const PostList = ({ pageNumber }: any) => {
+const PostList = ({ pageNumber }: any): JSX.Element => {
   const [state] = useAsync(() => loadPostList(pageNumber), [pageNumber]);
   const { loading, data: postlist, error }: any = state;
   if (loading) return <p>Loading...</p>;
