@@ -27,7 +27,7 @@ refactor : 2023.04.17 ~
 ## 실행방법
 ```
 client : client폴더에서 npm install 후 yarn dev
-server : server폴더에서 npm install 후 .env 파일 생성하고 mongodb 패스워드를 DB_PASSWORD로 저장 후 npm start
+server : server폴더에서 npm install 후 .env 파일 생성하고 mongodb 패스워드를 DB_PASSWORD로 저장 후 npm start (몽고디비는 제가 IP주소를 추가해주어야 접속이 가능해서 접속이 안될 수 있습니다.)
 ```
 ## 기술스택
 #### Client
@@ -40,6 +40,7 @@ server : server폴더에서 npm install 후 .env 파일 생성하고 mongodb 패
 - MongoDB
 
 <br/>
+
 ## API 명세
 
 ### GET /posts?page={page_number}&size={page_size}
